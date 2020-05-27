@@ -1,0 +1,32 @@
+#!/bin/bash
+set -eu
+
+here=$(cd -- "$(dirname -- "$BASH_SOURCE")" && /bin/pwd)
+downloads_dir=$here/downloads
+links_txt=$here/links.txt
+
+check () {
+  printf '%s  %q\n' "$sha256" "$downfile" | sha256sum -c -
+}
+
+while read -r label sha256 link
+do
+  [[ "$label" == \#* ]] && continue
+  prefix=$downloads_dir/$label
+  mkdir -p -- "$prefix"
+  name=${link##*/}
+  downfile=$prefix/$name
+
+  if [ -f "$downfile" ]
+  then
+    if check
+    then
+      continue
+    else
+      rm -v -- "$downfile"
+    fi
+  fi
+
+  ( set -x ; curl -sLR -o "$downfile" "$link" )
+  check || :
+done < "$links_txt"
