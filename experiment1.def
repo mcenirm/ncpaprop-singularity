@@ -1,24 +1,28 @@
 Bootstrap: localimage
-From: images/base.sif
-
-#Stage: build
+From: images/builder.sif
+Stage: build
 
 #%setup
 #    touch /file1
 #    touch ${SINGULARITY_ROOTFS}/file2
 
-#%files
-#    /file1
-#    /file1 /opt
+%files
+    downloads/petsc/petsc-lite-3.13.1.tar.gz                            /src/petsc.tar.gz
+    downloads/slepc/slepc-3.13.2.tar.gz                                 /src/slepc.tar.gz
+    downloads/ncpaprop/95ec8cf78c30684e79f086ccb21ce63df6dcf59a.tar.gz  /src/ncpaprop.tar.gz
 
 #%environment
 #    export LISTEN_PORT=12345
 #    export LC_ALL=C
 
-#%post
-#    apt-get update && apt-get install -y netcat
-#    NOW=`date`
-#    echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT
+%post
+     cd /src
+     ls -alF
+     tar xf petsc.tar.gz
+     ls -alF
+     cd petsc-3.13.1
+     ./configure --help #--prefix=/code/petsc
+     make
 
 #%runscript
 #    echo "Container was created $NOW"
