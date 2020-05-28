@@ -1,0 +1,6 @@
+Bootstrap: localimage
+From: images/builder.sif
+
+%post
+    yum install -y fftw-devel
+    yum install -y gsl-devel

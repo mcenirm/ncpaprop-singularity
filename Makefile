@@ -1,13 +1,11 @@
 DEFS := $(wildcard *.def)
 IMAGES := $(DEFS:%.def=images/%.sif)
+MKS := $(DEFS:%.def=%.mk)
 
 all : downloads/checked
 all : $(IMAGES)
 
-images/builder.sif      :  images/base.sif
-images/experiment1.sif  :  images/builder.sif
-
-% : images/%.sif
+-include $(MKS)
 
 images/%.sif : %.def
 	singularity build --force --fakeroot $@ $<
@@ -20,3 +18,6 @@ images :
 downloads/checked : links.txt fetchlinks
 	./fetchlinks
 	touch $@
+
+%.mk : %.def Makefile
+	sed -n -e 's#^From: \(images/.*\.sif\)#$(@:%.mk=images/%.sif) : \1#p' $< > $@

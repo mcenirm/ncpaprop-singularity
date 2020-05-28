@@ -1,0 +1,8 @@
+Bootstrap: localimage
+From: images/dependencies.sif
+
+%post
+    mkdir /src
+    git clone --single-branch --branch maint   https://gitlab.com/petsc/petsc.git           petsc
+    git clone --single-branch --branch v3.13.2 https://gitlab.com/slepc/slepc.git           slepc
+    git clone --single-branch --branch master  https://github.com/chetzer-ncpa/ncpaprop.git ncpaprop

@@ -2,4 +2,4 @@ Bootstrap: localimage
 From: images/base.sif
 
 %post
-     yum groupinstall -y 'Development Tools'
+    yum groupinstall -y 'Development Tools'

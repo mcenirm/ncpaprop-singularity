@@ -16,13 +16,11 @@ Stage: build
 #    export LC_ALL=C
 
 %post
-     cd /src
-     ls -alF
-     tar xf petsc.tar.gz
-     ls -alF
-     cd petsc-3.13.1
-     ./configure --help #--prefix=/code/petsc
-     make
+    cd /src
+    tar xf petsc.tar.gz
+    tar xf slepc.tar.gz
+    tar xf ncpaprop.tar.gz
+    ls -alF
 
 #%runscript
 #    echo "Container was created $NOW"
@@ -39,12 +37,3 @@ Stage: build
 #    else
 #        echo "Container base is not Ubuntu."
 #    fi
-
-#%labels
-#    Author d@sylabs.io
-#    Version v0.0.1
-
-%help
-    This is a demo container used to illustrate a def file that uses all
-    supported sections.
-

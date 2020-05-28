@@ -4,5 +4,7 @@ MirrorURL: http://mirror.centos.org/centos-%{OSVERSION}/%{OSVERSION}/os/$basearc
 Include: yum
 
 %post
-     yum makecache
-     yum groups mark convert
+    yum install -y centos-release-scl
+    yum install -y epel-release
+    yum makecache
+    yum groups mark convert
