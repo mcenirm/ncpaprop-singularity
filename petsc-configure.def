@@ -1,0 +1,11 @@
+Bootstrap: localimage
+From: images/gitclones.sif
+
+%post
+    mkdir /src/downloads
+    cd /src/petsc
+    ./configure \
+        --prefix=/code/petsc \
+        --with-packages-download-dir=/src/downloads \
+        --with-mpi=0 \
+        || tail configure.log
