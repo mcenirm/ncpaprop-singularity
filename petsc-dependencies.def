@@ -1,0 +1,7 @@
+Bootstrap: localimage
+From: images/gitclones.sif
+
+%post
+    yum install -y valgrind-devel
+    yum install -y {blas,lapack}{,64}-devel
+    mkdir /src/downloads

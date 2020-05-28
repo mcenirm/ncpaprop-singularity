@@ -1,1 +1,1 @@
-images/petsc-configure.sif : images/gitclones.sif
+images/petsc-configure.sif : images/petsc-dependencies.sif

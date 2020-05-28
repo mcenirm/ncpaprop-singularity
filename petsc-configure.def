@@ -1,8 +1,7 @@
 Bootstrap: localimage
-From: images/gitclones.sif
+From: images/petsc-dependencies.sif
 
 %post
-    mkdir /src/downloads
     cd /src/petsc
     ./configure \
         --prefix=/code/petsc \
