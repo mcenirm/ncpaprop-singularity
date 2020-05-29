@@ -7,4 +7,5 @@ From: images/petsc-dependencies.sif
         --prefix=/code/petsc \
         --with-packages-download-dir=/src/downloads \
         --with-mpi=0 \
+        --with-scalar-type=real,complex \
         || tail configure.log

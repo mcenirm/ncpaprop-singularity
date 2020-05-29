@@ -1,0 +1,13 @@
+Bootstrap: localimage
+From: images/experiment1b.sif
+Stage: build
+
+%post
+    cd /src/ncpaprop
+    ./configure \
+        --enable-autodependencies \
+        PETSC_DIR=/src/petsc \
+        PETSC_ARCH_REAL=arch-linux-c-real \
+        PETSC_ARCH_COMPLEX=arch-linux-c-complex \
+        --with-localslepc \
+        || tail -v config.log

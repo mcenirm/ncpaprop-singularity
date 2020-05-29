@@ -1,5 +1,5 @@
 Bootstrap: localimage
-From: images/builder.sif
+From: images/dependencies.sif
 Stage: build
 
 #%setup
@@ -17,9 +17,16 @@ Stage: build
 
 %post
     cd /src
-    tar xf petsc.tar.gz
-    tar xf slepc.tar.gz
-    tar xf ncpaprop.tar.gz
+    #
+    tar xf petsc.tar.gz --no-same-owner
+    mv petsc-*/ petsc
+    #
+    tar xf slepc.tar.gz --no-same-owner
+    mv slepc-*/ slepc
+    #
+    mkdir ncpaprop
+    tar xf ncpaprop.tar.gz -C ncpaprop --no-same-owner --strip-components=1
+    #
     ls -alF
 
 #%runscript

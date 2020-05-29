@@ -1,0 +1,20 @@
+Bootstrap: localimage
+From: images/experiment1.sif
+Stage: build
+
+%post
+    cd /src/petsc
+    for t in real complex
+    do
+      ./configure \
+          PETSC_ARCH=arch-linux-c-$t \
+          --with-scalar-type=$t \
+          --with-fc=0 --with-debugging=0 --with-mpi=0 --download-f2cblaslapack=1
+      make PETSC_ARCH=arch-linux-c-$t all test
+    done
+
+    cd /src/ncpaprop
+    ./configure \
+        --enable-autodependencies \
+        PETSC_DIR=/src/petsc \
+        || tail -v config.log
