@@ -3,6 +3,7 @@ From: images/experiment1b.sif
 Stage: build
 
 %post
+    yum install -y wget
     cd /src/ncpaprop
     ./configure \
         --enable-autodependencies \

@@ -1,0 +1,7 @@
+Bootstrap: localimage
+From: images/experiment1c.sif
+Stage: build
+
+%post
+    cd /src/ncpaprop
+    make all test || :
