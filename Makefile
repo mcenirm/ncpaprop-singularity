@@ -8,7 +8,7 @@ all : $(IMAGES)
 -include $(MKS)
 
 images/%.sif : %.def
-	singularity build --force --fakeroot $@ $<
+	singularity build --no-cleanup --force --fakeroot $@ $<
 
 $(IMAGES) : | images
 
