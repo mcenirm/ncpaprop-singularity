@@ -1,4 +1,3 @@
 #label    sha256                                                            link
 petsc     74a895e44e2ff1146838aaccb7613e7626d99e0eed64ca032c87c72d084efac3  http://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-lite-3.13.1.tar.gz
-slepc     04cb8306cb5d4d990509710d7f8ae949bdc2c7eb850930b8d0b0b5ca99f6c70d  https://slepc.upv.es/download/distrib/slepc-3.13.2.tar.gz
 ncpaprop  2ee9b700579aa80be7910b483587dcb54935ec4e77075faa5939a8296ee2d0ee  https://github.com/chetzer-ncpa/ncpaprop/archive/95ec8cf78c30684e79f086ccb21ce63df6dcf59a.tar.gz
