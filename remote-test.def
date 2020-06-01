@@ -4,6 +4,10 @@ MirrorURL: http://mirror.centos.org/centos-%{OSVERSION}/%{OSVERSION}/os/$basearc
 Include: yum
 
 
+%environment
+    PATH=/code/ncpaprop/bin:$PATH
+
+
 %post
     yum makecache
     yum groups mark convert
@@ -60,3 +64,7 @@ Include: yum
 
     cd /code/ncpaprop/
     make -k test || :
+
+
+%runscript
+    exec "$@"

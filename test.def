@@ -9,6 +9,10 @@ Include: yum
     downloads/ncpaprop/95ec8cf78c30684e79f086ccb21ce63df6dcf59a.tar.gz  /code/ncpaprop.tar.gz
 
 
+%environment
+    PATH=/code/ncpaprop/bin:$PATH
+
+
 %post
     yum makecache
     yum groups mark convert
@@ -54,3 +58,7 @@ Include: yum
 
     cd /code/ncpaprop/
     make -k test || :
+
+
+%runscript
+    exec "$@"
