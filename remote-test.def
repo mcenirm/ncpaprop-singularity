@@ -1,0 +1,64 @@
+Bootstrap: yum
+OSVersion: 7
+MirrorURL: http://mirror.centos.org/centos-%{OSVERSION}/%{OSVERSION}/os/$basearch/
+Include: yum
+
+
+%post
+    yum makecache
+    yum groups mark convert
+    yum groupinstall -y 'Development Tools'
+    yum install -y fftw-devel
+    yum install -y gsl-devel
+    yum install -y wget
+    yum install -y valgrind-devel
+    yum install -y {blas,lapack}{,64}-devel
+
+    mkdir -pv /code
+    cd /code/
+    for x in \
+        petsc:74a895e44e2ff1146838aaccb7613e7626d99e0eed64ca032c87c72d084efac3:http://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-lite-3.13.1.tar.gz \
+        ncpaprop:2ee9b700579aa80be7910b483587dcb54935ec4e77075faa5939a8296ee2d0ee:https://github.com/chetzer-ncpa/ncpaprop/archive/95ec8cf78c30684e79f086ccb21ce63df6dcf59a.tar.gz \
+    #
+    do
+      label=${x%%:*}
+      x=${x#$label:}
+      sha256=${x%%:*}
+      link=${x#$sha256:}
+      downfile=$label.tar.gz
+      curl -sLR -o "$downfile" "$link"
+      printf '%s  %q\n' "$sha256" "$downfile" | sha256sum -c -
+      tar xf "$downfile"
+      rm -v -- "$downfile"
+      mv -v -- "$label"*/ "$label"
+    done
+    chown -R root:root .
+
+    cd /code/petsc/
+    for t in real complex
+    do
+      ./configure \
+          PETSC_ARCH=arch-linux-c-$t \
+          --with-scalar-type=$t \
+          --with-fc=0 --with-debugging=0 --with-mpi=0 --download-f2cblaslapack=1
+      make PETSC_ARCH=arch-linux-c-$t all
+    done
+
+    cd /code/ncpaprop/
+    ./configure \
+        PETSC_DIR=/code/petsc \
+        PETSC_ARCH_REAL=arch-linux-c-real \
+        PETSC_ARCH_COMPLEX=arch-linux-c-complex \
+        --with-localslepc
+    make all
+
+
+%test
+    cd /code/petsc/
+    for t in real complex
+    do
+      make PETSC_ARCH=arch-linux-c-$t test
+    done
+
+    cd /code/ncpaprop/
+    make -k test

@@ -8,7 +8,10 @@ all : $(IMAGES)
 -include $(MKS)
 
 images/%.sif : %.def
-	singularity build --no-cleanup --force --fakeroot $@ $<
+	if [[ "$<" == remote-* ]] ; \
+	then singularity build --remote $@ $< ; \
+	else singularity build --no-cleanup --force --fakeroot $@ $< ; \
+	fi
 
 $(IMAGES) : | images
 
