@@ -52,8 +52,6 @@ Include: yum
         --with-localslepc
     make all
 
-
-%test
     cd /code/petsc/
     for t in real complex
     do
