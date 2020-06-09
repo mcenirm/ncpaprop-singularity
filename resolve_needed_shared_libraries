@@ -1,0 +1,121 @@
+#!/usr/bin/env python3
+from collections import OrderedDict
+from pathlib import Path
+import os
+import subprocess
+import sys
+
+
+class SearchPathList:
+    def __init__(
+        self,
+        env_names=["PATH", "LD_LIBRARY_PATH"],
+        defpath=os.defpath,
+        ldconfig_command=["ldconfig", "-N", "-v"],
+    ):
+        self.env_names = env_names or []
+        search = []
+        for name in env_names:
+            value = os.environ.get(name, None)
+            entries = value.split(os.pathsep) if value else []
+            search.extend(entries)
+        if not search:
+            search = defpath
+        if ldconfig_command:
+            output = subprocess.check_output(
+                ldconfig_command, stderr=subprocess.DEVNULL
+            ).decode()
+            lines = output.split(os.linesep)
+            for line in lines:
+                if line.endswith(":") and not line.startswith("\t"):
+                    parts = line.split(":", maxsplit=1)
+                    if parts:
+                        search.append(parts[0])
+        od = OrderedDict()
+        for item in search:
+            od[item] = Path(item)
+        self.search = list(od.values())
+
+    def __iter__(self):
+        return iter(self.search)
+
+
+class Searcher:
+    def __init__(self, search_paths=SearchPathList()):
+        self.search_paths = search_paths
+        self.memory = dict()
+
+    def search(self, path):
+        path = Path(path)
+        if path in self.memory:
+            return self.memory[path]
+        if path.is_absolute():
+            self.memory[path] = path
+            return path
+        path_abs = None
+        if not path_abs:
+            for parent in self.search_paths:
+                guess = parent / path
+                if guess.exists():
+                    path_abs = guess
+                    break
+        self.memory[path] = path_abs
+        return path_abs
+
+    def found(self):
+        for key, value in self.memory.items():
+            if value:
+                yield value
+
+    def missing(self):
+        for key, value in self.memory.items():
+            if not value:
+                yield key
+
+
+searcher = Searcher()
+
+
+# find shared library dependencies
+q = sys.argv[1:] or []
+while q:
+    item = searcher.search(q.pop())
+    if not item:
+        continue
+    cmd = ["objdump", "-p", str(item)]
+    output = subprocess.check_output(cmd).decode()
+    for line in output.split(os.linesep):
+        words = line.split(maxsplit=1)
+        if words and words[0] == "NEEDED":
+            q.append(words[1])
+
+# report things that couldn't be found
+missing = sorted(searcher.missing())
+if missing:
+    print("** missing")
+    for item in missing:
+        print("** -", item)
+
+# add targets of symlinks
+found = set(searcher.found())
+q = list(found)
+while q:
+    item = q.pop()
+    if item.is_symlink():
+        target = Path(os.readlink(item))
+        target = item.parent.joinpath(target)
+        found.add(target)
+        q.append(target)
+
+# add parent directories that are actually symlinks
+for item in list(found):
+    symlink_parents = {_ for _ in item.parents if _.is_symlink()}
+    if symlink_parents:
+        real_parent = item.parent.resolve()
+        found.remove(item)
+        found.add(real_parent / item.name)
+        found.update(symlink_parents)
+
+# report paths to capture
+for item in sorted(found):
+    print(item)
