@@ -1,7 +1,5 @@
-Bootstrap: yum
-OSVersion: 7
-MirrorURL: http://mirror.centos.org/centos-%{OSVERSION}/%{OSVERSION}/os/$basearch/
-Include: binutils
+Bootstrap: localimage
+From: images/small-centos7.sif
 Stage: centos7
 
 
@@ -11,11 +9,14 @@ Stage: big
 
 
 Bootstrap: scratch
+Stage: small
+
+%files from centos7
+    /etc/passwd
+    /etc/group
 
 %files from centos7
     /bin
-    /etc/group
-    /etc/passwd
     /lib64
     /usr/bin/bash
     /usr/bin/sh
@@ -39,8 +40,24 @@ Bootstrap: scratch
 
 # debugging
 
-%files from centos7
-    /usr/bin/objdump
-
 %post
     objdump -p /code/ncpaprop/bin/Modess | grep NEEDED || :
+
+%files from centos7
+    /lib64
+    /usr/bin/grep
+    /usr/bin/objdump
+    /usr/lib64/ld-2.17.so
+    /usr/lib64/ld-linux-x86-64.so.2
+    /usr/lib64/libbfd-2.27-41.base.el7_7.3.so
+    /usr/lib64/libc-2.17.so
+    /usr/lib64/libc.so.6
+    /usr/lib64/libdl-2.17.so
+    /usr/lib64/libdl.so.2
+    /usr/lib64/libopcodes-2.27-41.base.el7_7.3.so
+    /usr/lib64/libpcre.so.1
+    /usr/lib64/libpcre.so.1.2.0
+    /usr/lib64/libpthread-2.17.so
+    /usr/lib64/libpthread.so.0
+    /usr/lib64/libz.so.1
+    /usr/lib64/libz.so.1.2.7
