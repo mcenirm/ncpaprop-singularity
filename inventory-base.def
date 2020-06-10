@@ -1,0 +1,5 @@
+Bootstrap: localimage
+From: images/test.sif
+
+%post
+    yum install -y python36

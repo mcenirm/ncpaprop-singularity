@@ -1,0 +1,12 @@
+Bootstrap: localimage
+From: images/inventory-base.sif
+
+%files
+    resolve_needed_shared_libraries /tmp/
+
+#%environment
+#    LD_LIBRARY_PATH=/code/petsc/arch-linux-c-complex/lib/:$LD_LIBRARY_PATH
+#    LD_LIBRARY_PATH=/code/petsc/arch-linux-c-real/lib/:$LD_LIBRARY_PATH
+
+%runscript
+    python3 /tmp/resolve_needed_shared_libraries "$@"

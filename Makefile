@@ -24,3 +24,9 @@ downloads/checked : links.txt fetchlinks
 
 %.mk : %.def Makefile
 	sed -n -e 's#^From: \(images/.*\.sif\)#$(@:%.mk=images/%.sif) : \1#p' $< > $@
+
+images/inventory.sif : resolve_needed_shared_libraries
+all : ncpaprop-needed-files.txt
+ncpaprop-needed-files.txt : ncpaprop-small-inputs.txt images/inventory.sif
+	xargs -r < $^ > $@
+	head -v $@

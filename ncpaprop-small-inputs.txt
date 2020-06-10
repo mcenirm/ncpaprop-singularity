@@ -1,0 +1,12 @@
+/bin/sh
+/code/ncpaprop/bin/CModBB
+/code/ncpaprop/bin/CModess
+/code/ncpaprop/bin/ModBB
+/code/ncpaprop/bin/Modess
+/code/ncpaprop/bin/ModessRD1WCM
+/code/ncpaprop/bin/pape
+/code/ncpaprop/bin/raytrace.2d
+/code/ncpaprop/bin/raytrace.3d
+/code/ncpaprop/bin/tdpape
+/code/ncpaprop/bin/WMod
+/code/ncpaprop/bin/wnlrt

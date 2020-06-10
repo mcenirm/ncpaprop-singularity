@@ -1,0 +1,51 @@
+** missing
+** - libpetsc.so.3.13
+** - libslepc.so.3.13
+** extra lib paths
+** - /code/ncpaprop/extern/slepc/slepc-3.13.1/arch-linux-c-real/lib
+** - /code/petsc/arch-linux-c-real/lib
+** - /code/ncpaprop/extern/slepc/slepc-3.13.1/arch-linux-c-complex/lib
+** - /code/petsc/arch-linux-c-complex/lib
+/bin
+/code/ncpaprop/bin/CModBB
+/code/ncpaprop/bin/CModess
+/code/ncpaprop/bin/ModBB
+/code/ncpaprop/bin/Modess
+/code/ncpaprop/bin/ModessRD1WCM
+/code/ncpaprop/bin/WMod
+/code/ncpaprop/bin/pape
+/code/ncpaprop/bin/raytrace.2d
+/code/ncpaprop/bin/raytrace.3d
+/code/ncpaprop/bin/tdpape
+/code/ncpaprop/bin/wnlrt
+/lib64
+/usr/bin/bash
+/usr/bin/sh
+/usr/lib64/atlas/libsatlas.so.3
+/usr/lib64/atlas/libsatlas.so.3.10
+/usr/lib64/ld-2.17.so
+/usr/lib64/ld-linux-x86-64.so.2
+/usr/lib64/libc-2.17.so
+/usr/lib64/libc.so.6
+/usr/lib64/libdl-2.17.so
+/usr/lib64/libdl.so.2
+/usr/lib64/libfftw3.so.3
+/usr/lib64/libfftw3.so.3.3.2
+/usr/lib64/libgcc_s-4.8.5-20150702.so.1
+/usr/lib64/libgcc_s.so.1
+/usr/lib64/libgfortran.so.3
+/usr/lib64/libgfortran.so.3.0.0
+/usr/lib64/libgsl.so.0
+/usr/lib64/libgsl.so.0.16.0
+/usr/lib64/libgslcblas.so.0
+/usr/lib64/libgslcblas.so.0.0.0
+/usr/lib64/libm-2.17.so
+/usr/lib64/libm.so.6
+/usr/lib64/libpthread-2.17.so
+/usr/lib64/libpthread.so.0
+/usr/lib64/libquadmath.so.0
+/usr/lib64/libquadmath.so.0.0.0
+/usr/lib64/libstdc++.so.6
+/usr/lib64/libstdc++.so.6.0.19
+/usr/lib64/libtinfo.so.5
+/usr/lib64/libtinfo.so.5.9

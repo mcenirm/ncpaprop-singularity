@@ -41,7 +41,7 @@ class SearchPathList:
 
 
 class Searcher:
-    def __init__(self, search_paths=SearchPathList()):
+    def __init__(self, search_paths=list(SearchPathList())):
         self.search_paths = search_paths
         self.memory = dict()
 
@@ -77,6 +77,8 @@ searcher = Searcher()
 
 
 # find shared library dependencies
+extra_search_paths = OrderedDict()
+search_paths = set(searcher.search_paths)
 q = sys.argv[1:] or []
 while q:
     item = searcher.search(q.pop())
@@ -86,14 +88,24 @@ while q:
     output = subprocess.check_output(cmd).decode()
     for line in output.split(os.linesep):
         words = line.split(maxsplit=1)
-        if words and words[0] == "NEEDED":
-            q.append(words[1])
+        if words:
+            if words[0] == "NEEDED":
+                q.append(words[1])
+            elif words[0] == "RPATH":
+                parts = words[1].split(os.pathsep)
+                for part in parts:
+                    if part not in search_paths:
+                        extra_search_paths[part] = True
 
 # report things that couldn't be found
 missing = sorted(searcher.missing())
 if missing:
     print("** missing")
     for item in missing:
+        print("** -", item)
+if extra_search_paths:
+    print("** extra lib paths")
+    for item in extra_search_paths.keys():
         print("** -", item)
 
 # add targets of symlinks
