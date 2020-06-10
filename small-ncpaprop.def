@@ -16,7 +16,7 @@ Stage: small
     /etc/group
 
 %files from big
-    /code/
+    /code
 
 %environment
     PATH=/code/ncpaprop/bin:$PATH
