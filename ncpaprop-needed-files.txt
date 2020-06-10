@@ -1,11 +1,3 @@
-** missing
-** - libpetsc.so.3.13
-** - libslepc.so.3.13
-** extra lib paths
-** - /code/ncpaprop/extern/slepc/slepc-3.13.1/arch-linux-c-real/lib
-** - /code/petsc/arch-linux-c-real/lib
-** - /code/ncpaprop/extern/slepc/slepc-3.13.1/arch-linux-c-complex/lib
-** - /code/petsc/arch-linux-c-complex/lib
 /bin
 /code/ncpaprop/bin/CModBB
 /code/ncpaprop/bin/CModess
@@ -18,6 +10,10 @@
 /code/ncpaprop/bin/raytrace.3d
 /code/ncpaprop/bin/tdpape
 /code/ncpaprop/bin/wnlrt
+/code/ncpaprop/extern/slepc/slepc-3.13.1/arch-linux-c-complex/lib/libslepc.so.3.13
+/code/ncpaprop/extern/slepc/slepc-3.13.1/arch-linux-c-complex/lib/libslepc.so.3.13.1
+/code/petsc/arch-linux-c-complex/lib/libpetsc.so.3.13
+/code/petsc/arch-linux-c-complex/lib/libpetsc.so.3.13.1
 /lib64
 /usr/bin/bash
 /usr/bin/sh

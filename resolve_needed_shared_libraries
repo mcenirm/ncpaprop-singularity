@@ -94,6 +94,7 @@ while q:
             elif words[0] == "RPATH":
                 parts = words[1].split(os.pathsep)
                 for part in parts:
+                    part = Path(part)
                     if part not in search_paths:
                         extra_search_paths[part] = True
 
@@ -104,7 +105,7 @@ if missing:
     for item in missing:
         print("** -", item)
 if extra_search_paths:
-    print("** extra lib paths")
+    print("** extra search paths")
     for item in extra_search_paths.keys():
         print("** -", item)
 
